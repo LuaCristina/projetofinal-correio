@@ -1,70 +1,39 @@
 package com.example.correio.model;
 
 import jakarta.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@Schema(description = "Representa um pacote")
 public class Pacote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "ID único do pacote", example = "1")
     private Long id;
 
+    @NotBlank(message = "A descrição é obrigatória")
+    @Schema(description = "Descrição do pacote", example = "Livro")
     private String descricao;
-    private double peso;
+
+    @NotNull(message = "O peso é obrigatório")
+    @Schema(description = "Peso do pacote em kg", example = "1.5")
+    private Double peso;
+
+    @Schema(description = "Status do pacote", example = "Em trânsito")
     private String status;
 
     @ManyToOne
+    @Schema(description = "Remetente do pacote")
     private Usuario remetente;
 
     @ManyToOne
+    @Schema(description = "Destinatário do pacote")
     private Usuario destinatario;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Usuario getRemetente() {
-        return remetente;
-    }
-
-    public void setRemetente(Usuario remetente) {
-        this.remetente = remetente;
-    }
-
-    public Usuario getDestinatario() {
-        return destinatario;
-    }
-
-    public void setDestinatario(Usuario destinatario) {
-        this.destinatario = destinatario;
-    }
 }
